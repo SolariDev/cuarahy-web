@@ -1,0 +1,16 @@
+# Cuarahy.NET
+User-agent: *
+Allow: /
+Disallow: /_landing-vieja/
+
+# Buscadores y asistentes de IA que citan y recomiendan sitios
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://DOMINIO.PENDIENTE/sitemap.xml

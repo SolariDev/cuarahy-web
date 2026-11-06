@@ -575,6 +575,17 @@ h3 { font-family: var(--titulo); }
 }
 .viene b { display: block; font: 600 1.6rem/1.1 var(--mano); color: var(--birome); }
 
+/* Logo de un cliente (TreeHouse): más alto porque lleva el nombre debajo */
+.producto-cab img.logo-cliente { height: 112px; }
+.mini img.logo-cliente { height: 104px; }
+
+/* Estado "en preparación" (punto ámbar en vez de verde) */
+.estado-prep { background: #FFF1CC; color: #6B4A00; }
+.estado-prep::before { background: var(--sol); }
+
+/* Rentify: logo grande en lugar de la maqueta */
+.vista img.rentify-logo { display: block; width: min(260px, 70%); height: auto; }
+
 .vista { margin: 0; display: flex; flex-direction: column; align-items: center; gap: .8rem; }
 .vista figcaption { font-size: .85rem; color: var(--suave); text-align: center; }
 
@@ -742,7 +753,7 @@ h3 { font-family: var(--titulo); }
 
 /* ---------- Resumen de productos (inicio) ---------- */
 
-.minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+.minis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
 .mini {
   display: flex;
   flex-direction: column;
@@ -902,6 +913,7 @@ h3 { font-family: var(--titulo); }
   .hero .sello-borde:hover, .hero .sello-borde:active { transform: none; }
   .chips { margin-top: 1rem; }
   .producto-cab img { height: 64px; }
+  .producto-cab img.logo-cliente { height: 92px; }
 }
 
 /* ---------- Movimiento reducido ---------- */
