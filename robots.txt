@@ -13,4 +13,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://DOMINIO.PENDIENTE/sitemap.xml
+Sitemap: https://cuarahy.net/sitemap.xml
