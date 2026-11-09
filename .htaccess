@@ -10,6 +10,13 @@ RedirectMatch 404 ^/_landing-vieja(/|$)
   Require all denied
 </FilesMatch>
 
+# www -> sin www. DreamHost ya redirige HTTP a HTTPS; esto cubre https://www
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.cuarahy\.net$ [NC]
+  RewriteRule ^ https://cuarahy.net%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
@@ -17,17 +24,25 @@ RedirectMatch 404 ^/_landing-vieja(/|$)
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
 
-# Velocidad: los archivos que casi no cambian se guardan en el navegador
+# Velocidad: lo que casi no cambia se guarda en el navegador; el HTML y el CSS/JS se renuevan rápido
 <IfModule mod_expires.c>
   ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType image/webp "access plus 1 month"
   ExpiresByType image/png "access plus 1 month"
   ExpiresByType image/svg+xml "access plus 1 month"
-  ExpiresByType text/css "access plus 1 day"
-  ExpiresByType text/javascript "access plus 1 day"
-  ExpiresByType application/javascript "access plus 1 day"
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType text/javascript "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
 </IfModule>
+
+# El HTML siempre se revalida, para que cada cambio publicado se vea enseguida
+<FilesMatch "\.html$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, must-revalidate"
+  </IfModule>
+</FilesMatch>
 
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript image/svg+xml application/json application/xml text/xml
