@@ -15,3 +15,6 @@ desktop.ini
 node_modules/
 *.log
 *.tmp
+
+# Documentos internos (informes de auditoría, notas de trabajo): nunca públicos
+docs/
