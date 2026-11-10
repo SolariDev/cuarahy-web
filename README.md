@@ -23,7 +23,7 @@ Sitio de **Cuarahy.NET**, empresa de software de Uruguay. Muestra los sistemas e
 
 ## SEO técnico (hecho el 04/11/2026)
 
-- `robots.txt` (permite OAI-SearchBot, ChatGPT-User y PerplexityBot), `sitemap.xml`, URL canónica y etiquetas para compartir en cada página, datos estructurados (JSON-LD) en inicio y productos, `404.html` y `.htaccess` (oculta `.git`, README y `_landing-vieja`; cabeceras de seguridad y caché).
+- `robots.txt` (permite OAI-SearchBot, ChatGPT-User y PerplexityBot), `sitemap.xml`, URL canónica y etiquetas para compartir en cada página, datos estructurados (JSON-LD) en inicio y productos, `404.html` y `.htaccess` (oculta `.git` y README; cabeceras de seguridad y caché).
 
 ## Pendiente
 
@@ -31,7 +31,6 @@ Sitio de **Cuarahy.NET**, empresa de software de Uruguay. Muestra los sistemas e
 - Activar el certificado SSL en DreamHost y recién después la redirección a HTTPS.
 - Correo de contacto, cuando el dominio esté activo.
 - Actualizar los enlaces de redes cuando existan los perfiles de Cuarahy.NET (hoy son los personales).
-- Decidir qué hacer con `_landing-vieja/`.
 
 ## Flujo de trabajo
 

@@ -5,7 +5,6 @@ ErrorDocument 404 /404.html
 
 # No mostrar el repositorio ni archivos internos si la carpeta del sitio es el repo clonado
 RedirectMatch 404 /\.git
-RedirectMatch 404 ^/_landing-vieja(/|$)
 <FilesMatch "^(README\.md|\.gitignore)$">
   Require all denied
 </FilesMatch>
