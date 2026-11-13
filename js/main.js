@@ -13,6 +13,7 @@
   var fab = document.querySelector('.fab');
   var hero = document.getElementById('inicio');
   var pendiente = false;
+  var hayBotonWa = false; // true si ya se ve un botón grande de WhatsApp
 
   function pintar() {
     pendiente = false;
@@ -25,7 +26,7 @@
     cab.classList.toggle('sobre-noche', sobreNoche);
     cab.classList.toggle('scrolled', !sobreNoche);
     cab.classList.toggle('bajo', y > 30);
-    fab.classList.toggle('visible', y > alto * 0.6);
+    fab.classList.toggle('visible', y > alto * 0.6 && !hayBotonWa);
   }
 
   function pedir() {
@@ -33,6 +34,18 @@
       pendiente = true;
       requestAnimationFrame(pintar);
     }
+  }
+
+  // Un solo WhatsApp a la vista: el flotante se esconde si ya se ve un botón grande
+  var botonesWa = document.querySelectorAll('main a.sello[href^="https://wa.me"]');
+  if (botonesWa.length && 'IntersectionObserver' in window) {
+    var vistos = new Set();
+    var obsWa = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { vistos.add(e.target); } else { vistos.delete(e.target); } });
+      hayBotonWa = vistos.size > 0;
+      pedir();
+    });
+    botonesWa.forEach(function (b) { obsWa.observe(b); });
   }
 
   window.addEventListener('scroll', pedir, { passive: true });
