@@ -585,73 +585,88 @@ h3 { font-family: var(--titulo); }
 /* Rentify: logo grande en lugar de la maqueta */
 .vista img.rentify-logo { display: block; width: min(260px, 70%); height: auto; }
 
-.vista { margin: 0; display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+.vista { margin: 0; padding: .5rem 0 0; display: flex; flex-direction: column; align-items: center; gap: .8rem; }
 .vista figcaption { font-size: .85rem; color: var(--suave); text-align: center; }
 
 /* Demo viva de Alma-Zen (modo oscuro, como la app) */
 .demo-cel {
   --d-fondo: #18181B;
-  --d-sup: #27272A;
+  --d-sup: #2A2A30;
   --d-borde: #3F3F46;
-  --d-linea: #2E2E33;
+  --d-linea: #34343B;
   --d-texto: #F4F4F5;
   --d-suave: #A1A1AA;
-  --d-azul: #5B8DEF;
+  --d-azul: #3B82F6;
   width: min(100%, 300px);
   padding: .55rem .95rem 1.4rem;
   position: relative;
   background: var(--d-fondo);
   color: var(--d-texto);
   color-scheme: dark;
-  border: 3px solid var(--tinta);
-  border-radius: 38px;
-  box-shadow: 6px 6px 0 var(--tinta);
+  border: 9px solid #0B0B0D;
+  border-radius: 44px;
+  outline: 2px solid #3A3A42;
+  outline-offset: 0;
+  box-shadow:
+    1px 0 0 #2A2A30, 2px 0 0 #2A2A30, 3px 0 0 #26262B, 4px 0 0 #222227, 5px 0 0 #1E1E22, 6px 0 0 #1A1A1E,
+    28px 34px 50px rgba(20, 22, 40, .28), 10px 14px 18px rgba(20, 22, 40, .18);
   font-family: var(--texto);
+  transform: perspective(1400px) rotateY(-16deg) rotateX(5deg) rotateZ(1deg);
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1);
 }
-.demo-cel::before { content: ""; position: absolute; top: 11px; left: 50%; translate: -50% 0; width: 72px; height: 20px; border-radius: 99px; background: #000; }
-.demo-cel::after { content: ""; position: absolute; bottom: 7px; left: 50%; translate: -50% 0; width: 96px; height: 4px; border-radius: 99px; background: #52525B; }
+/* Al tocarlo o escribir, queda de frente */
+.demo-cel:hover, .demo-cel:focus-within { transform: perspective(1400px) rotateY(-4deg) rotateX(2deg); }
+@media (prefers-reduced-motion: reduce) { .demo-cel { transition: none; } }
+.demo-botones { position: absolute; left: -13px; top: 96px; width: 4px; height: 92px; border-radius: 3px; background: #2A2A30; box-shadow: 0 -34px 0 -6px #2A2A30; }
+.demo-cel::before { content: ""; position: absolute; top: 4px; left: 50%; translate: -50% 0; width: 72px; height: 20px; border-radius: 99px; background: #000; }
+.demo-cel::after { content: ""; position: absolute; bottom: 5px; left: 50%; translate: -50% 0; width: 96px; height: 4px; border-radius: 99px; background: #52525B; }
 .demo-estado { display: flex; align-items: center; justify-content: space-between; height: 30px; padding: 0 .7rem; font: 700 .78rem/1 var(--texto); }
 .demo-bat { position: relative; width: 21px; height: 10px; border: 1.5px solid currentColor; border-radius: 3px; }
 .demo-bat::before { content: ""; position: absolute; inset: 1.5px 5px 1.5px 1.5px; border-radius: 1px; background: currentColor; }
 .demo-bat::after { content: ""; position: absolute; top: 2px; right: -4px; width: 2px; height: 3px; border-radius: 0 1px 1px 0; background: currentColor; }
-.demo-app { display: flex; align-items: center; gap: .75rem; padding: .75rem .15rem .85rem; font: 700 1.05rem/1 var(--texto); }
+.demo-app { display: grid; grid-template-columns: 24px 1fr 24px; align-items: center; padding: .7rem .1rem .8rem; }
 .demo-hamb { display: grid; gap: 4px; }
 .demo-hamb i { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; }
-.demo-buscar {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: 0 .75rem;
-  height: 46px;
-  border: 1.5px solid var(--d-borde);
-  border-radius: 12px;
-  background: var(--d-sup);
-}
-.demo-buscar:focus-within { border-color: var(--d-azul); box-shadow: 0 0 0 3px rgba(91, 141, 239, .3); }
-.demo-buscar input {
-  flex: 1;
-  min-width: 0;
-  height: 100%;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: var(--d-texto);
-  font: 400 1rem var(--texto);   /* 16px: el iPhone no hace zoom */
-}
-.demo-buscar input::placeholder { color: var(--d-suave); }
-.demo-buscar svg { flex: none; color: var(--d-suave); }
+.demo-nombre { text-align: center; font: 700 1.2rem/1.2 var(--texto); letter-spacing: -.02em; }
+.demo-input { display: block; width: 100%; height: 44px; padding: 0 .85rem; border: 1.5px solid var(--d-borde); border-radius: 12px; background: var(--d-sup); color: var(--d-texto); font: 400 1rem var(--texto); outline: 0; }   /* 16px: el iPhone no hace zoom */
+.demo-input::placeholder { color: #71717A; }
+.demo-input:focus { border-color: var(--d-azul); box-shadow: 0 0 0 3px rgba(59, 130, 246, .25); }
 .solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.demo-lista { list-style: none; margin: .5rem 0 0; padding: 0; min-height: 15.5rem; }
-.demo-lista li { display: grid; grid-template-columns: 1fr auto; gap: .1rem .75rem; padding: .7rem .15rem; border-bottom: 1px solid var(--d-linea); font-size: .95rem; line-height: 1.25; }
+.demo-lista { list-style: none; margin: .35rem 0 0; padding: 0; min-height: 10.4rem; }
+.demo-lista li { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .55rem 0; border-bottom: 1px solid var(--d-sup); }
+.demo-lista li:last-child { border-bottom: 0; }
+.demo-lista div { min-width: 0; }
+.demo-lista strong { display: block; font-size: .9rem; font-weight: 600; line-height: 1.3; }
 .demo-lista small { display: block; color: var(--d-suave); font-size: .8rem; }
-.demo-lista b { align-self: center; font-variant-numeric: tabular-nums; }
-.demo-lista .vacio { display: block; border: 0; color: var(--d-suave); }
-.demo-pie { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .9rem; padding: .7rem .75rem; border-radius: 14px; background: var(--d-sup); }
-.demo-pie > span:first-child { font-size: .75rem; line-height: 1.25; color: var(--d-suave); }
-.demo-pie b { display: block; font-size: 1.1rem; color: var(--d-texto); font-variant-numeric: tabular-nums; }
-.demo-cobrar { padding: .6rem 1.2rem; border-radius: 10px; background: var(--d-azul); color: #fff; font-weight: 700; font-size: .95rem; }
+.demo-lista .vacio { display: block; border: 0; color: var(--d-suave); font-size: .9rem; }
+.demo-agregar { flex: none; padding: .35rem .7rem; border: 1.5px solid var(--d-linea); border-radius: 12px; background: var(--d-fondo); color: var(--d-texto); font: 600 .8rem var(--texto); cursor: pointer; }
+.demo-agregar:hover, .demo-agregar:focus-visible { border-color: var(--d-azul); background: var(--d-sup); }
+.demo-seccion { margin: .5rem 0 .35rem; font-size: .8rem; font-weight: 600; color: var(--d-suave); }
+.demo-venta { height: 5.8rem; overflow-y: auto; overscroll-behavior: contain; }
+.demo-msj { margin: 0; padding: .6rem .8rem; border-radius: 12px; background: rgba(139, 92, 246, .16); color: #C4B5FD; font-size: .85rem; text-align: center; }
+.demo-linea { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid var(--d-sup); font-size: .88rem; line-height: 1.3; }
+.demo-linea small { display: block; color: var(--d-suave); font-size: .78rem; }
+.demo-linea b { flex: none; font-variant-numeric: tabular-nums; }
+.demo-total { display: flex; justify-content: space-between; align-items: baseline; margin: .6rem 0; font-size: 1.2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.demo-aviso { margin: 0 0 .5rem; padding: .5rem .7rem; border-radius: 12px; background: rgba(34, 197, 94, .14); color: #86EFAC; font-size: .85rem; text-align: center; }
+.demo-aviso:empty { display: none; }
+.demo-cobrar { display: block; width: 100%; padding: .8rem; border: 1.5px solid var(--d-azul); border-radius: 12px; background: var(--d-azul); color: #fff; font: 700 1rem var(--texto); cursor: pointer; }
+.demo-cobrar:disabled { opacity: .45; cursor: default; }
 
-/* Maqueta de Rentify */
+/* Productos: gancho, tres datos y caso real */
+.gancho { margin: 0 0 .6rem; max-width: 46ch; font: 700 1.15rem/1.4 var(--titulo); color: var(--tinta); }
+.datos { display: grid; gap: .45rem; margin: 1.1rem 0 1.25rem; padding: .85rem 1rem; max-width: 50ch; border-left: 3px solid var(--birome); background: rgba(31, 63, 191, .045); border-radius: 0 10px 10px 0; }
+.datos > div { display: grid; grid-template-columns: 8rem 1fr; gap: .6rem; align-items: baseline; }
+.datos dt { font: 700 .72rem/1.25 var(--texto); letter-spacing: .08em; text-transform: uppercase; color: var(--birome); }
+.datos dd { margin: 0; font-size: .95rem; line-height: 1.4; }
+.producto-lado { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.caso { width: min(100%, 340px); padding: 1rem 1.1rem 1.1rem; background: var(--papel); border: 2px solid var(--tinta); border-radius: 12px; box-shadow: 4px 4px 0 var(--tinta); text-align: center; }
+.caso img { display: block; width: auto; height: 64px; margin: 0 auto .7rem; }
+.caso img.caso-th { height: 84px; }
+.caso-t { margin: 0 0 .35rem; font: 800 1.02rem/1.3 var(--titulo); }
+.caso p:last-child { margin: 0; font-size: .92rem; line-height: 1.45; color: var(--suave); }
+
+/* Maqueta de contratos (Rentify) */
 .contratos {
   width: min(100%, 420px);
   padding: 1rem 1.1rem 1.2rem;
@@ -683,7 +698,7 @@ h3 { font-family: var(--titulo); }
   display: flex;
   flex-direction: column;
 }
-.servicio .num { font: 800 2.2rem/1 var(--titulo); color: var(--coral); }
+.servicio .num { font: 600 2.6rem/1 var(--mano); color: var(--coral); }
 .servicio h3 { margin: .15rem 0 .4rem; font-size: 1.45rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
 .servicio p { margin: 0 0 1rem; color: var(--suave); }
 .servicio .enlace { margin-top: auto; align-self: flex-start; }
@@ -775,7 +790,7 @@ h3 { font-family: var(--titulo); }
 
 /* ---------- Resumen de productos (inicio) ---------- */
 
-.minis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+.minis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
 .mini {
   display: flex;
   flex-direction: column;
@@ -869,10 +884,23 @@ h3 { font-family: var(--titulo); }
 
 /* Pantallas anchas: el menú va junto al logo, separado por una raya */
 @media (min-width: 721px) {
-  .cab nav { margin-left: 1.25rem; padding-left: 2rem; border-left: 2px solid currentColor; }
+  .cab nav { margin-left: 1.25rem; padding-left: 1.4rem; gap: .5rem; border-left: 2px solid currentColor; }
+  .cab nav a { padding: .4rem .85rem; border: 2px solid transparent; border-radius: 10px; transition: border-color .2s, box-shadow .2s, transform .2s; }
+  /* Al pasar el mouse: aparece un borde punteado, como para recortar, y sube un poco (sin subrayado) */
+  .cab nav a:hover, .cab nav a:focus-visible { text-decoration: none; border-style: dashed; border-color: currentColor; transform: translateY(-2px); }
+  /* Página actual: resaltada como un botón */
+  .cab nav a[aria-current="page"] { text-decoration: none; background: var(--blanco); color: var(--tinta); border-color: var(--tinta); box-shadow: 2px 2px 0 var(--tinta); }
+  .cab nav a[aria-current="page"]:hover { border-style: solid; transform: none; }
+}
+@media (min-width: 721px) and (prefers-reduced-motion: reduce) {
+  .cab nav a, .cab nav a:hover, .cab nav a:focus-visible { transition: none; transform: none; }
 }
 
 /* ---------- Pantallas chicas ---------- */
+
+@media (max-width: 560px) {
+  .datos > div { grid-template-columns: 1fr; gap: .05rem; }
+}
 
 @media (max-width: 900px) {
   .dos-col { grid-template-columns: minmax(0, 1fr); }

@@ -96,42 +96,100 @@
 
   var campo = document.getElementById('demo-q');
   var lista = document.getElementById('demo-lista');
+  var ventaEl = document.getElementById('demo-venta');
+  var totalEl = document.getElementById('demo-total');
+  var avisoEl = document.getElementById('demo-aviso');
+  var cobrar = document.getElementById('demo-cobrar');
+  var venta = []; // [{ i: índice en datos, cant: unidades }]
+  var reloj = null;
 
   // Sin importar mayúsculas ni tildes, y con coincidencias parciales
   function limpiar(texto) {
-    return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  }
+  function pesos(n) { return '$ ' + n; }
+  function nuevo(tag, clase, texto) {
+    var e = document.createElement(tag);
+    if (clase) { e.className = clase; }
+    if (texto != null) { e.textContent = texto; }
+    return e;
   }
 
+  // Resultados del buscador, como en la app: nombre · presentación, precio y "+ Agregar"
   function mostrar() {
     var q = limpiar(campo.value);
-    var hallados = datos.filter(function (d) {
-      return q === '' || limpiar(d[0]).indexOf(q) !== -1;
-    }).slice(0, 5);
-
+    var hallados = [];
+    for (var k = 0; k < datos.length && hallados.length < 3; k++) {
+      if (q === '' || limpiar(datos[k][0]).indexOf(q) !== -1) { hallados.push(k); }
+    }
     lista.textContent = '';
     if (hallados.length === 0) {
-      var vacio = document.createElement('li');
-      vacio.className = 'vacio';
-      vacio.textContent = 'Sin resultados en este ejemplo.';
-      lista.appendChild(vacio);
+      lista.appendChild(nuevo('li', 'vacio', 'No se encontró el producto.'));
       return;
     }
-    hallados.forEach(function (d) {
-      var li = document.createElement('li');
-      var nombre = document.createElement('span');
-      nombre.textContent = d[0] + ' ';
-      var chico = document.createElement('small');
-      chico.textContent = d[1];
-      nombre.appendChild(chico);
-      var precio = document.createElement('b');
-      precio.textContent = '$ ' + d[2];
-      li.appendChild(nombre);
-      li.appendChild(precio);
+    hallados.forEach(function (k) {
+      var li = nuevo('li');
+      var txt = nuevo('div');
+      txt.appendChild(nuevo('strong', null, datos[k][0] + ' · ' + datos[k][1]));
+      txt.appendChild(nuevo('small', null, pesos(datos[k][2])));
+      var btn = nuevo('button', 'demo-agregar', '+ Agregar');
+      btn.type = 'button';
+      btn.setAttribute('data-i', k);
+      li.appendChild(txt);
+      li.appendChild(btn);
       lista.appendChild(li);
     });
   }
 
-  if (campo && lista) {
+  // Venta actual, total y botón "Cobrar"
+  function pintarVenta() {
+    ventaEl.textContent = '';
+    var total = 0;
+    if (venta.length === 0) {
+      ventaEl.appendChild(nuevo('p', 'demo-msj', 'Todavía no agregaste productos.'));
+    }
+    venta.forEach(function (l) {
+      var d = datos[l.i];
+      var fila = nuevo('div', 'demo-linea');
+      var txt = nuevo('span', null, d[0] + ' · ' + d[1]);
+      txt.appendChild(nuevo('small', null, l.cant + ' × ' + pesos(d[2])));
+      fila.appendChild(txt);
+      fila.appendChild(nuevo('b', null, pesos(d[2] * l.cant)));
+      ventaEl.appendChild(fila);
+      total += d[2] * l.cant;
+    });
+    ventaEl.scrollTop = ventaEl.scrollHeight;
+    totalEl.textContent = pesos(total);
+    cobrar.disabled = venta.length === 0;
+    return total;
+  }
+
+  function avisar(texto) {
+    avisoEl.textContent = texto;
+    clearTimeout(reloj);
+    if (texto) { reloj = setTimeout(function () { avisoEl.textContent = ''; }, 5000); }
+  }
+
+  if (campo && lista && ventaEl && cobrar) {
     campo.addEventListener('input', mostrar);
+    lista.addEventListener('click', function (e) {
+      var btn = e.target.closest('.demo-agregar');
+      if (!btn) { return; }
+      var i = parseInt(btn.getAttribute('data-i'), 10);
+      var linea = null;
+      venta.forEach(function (l) { if (l.i === i) { linea = l; } });
+      if (linea) { linea.cant += 1; } else { venta.push({ i: i, cant: 1 }); }
+      avisar('');
+      pintarVenta();
+    });
+    cobrar.addEventListener('click', function () {
+      var total = pintarVenta();
+      if (venta.length === 0) { return; }
+      venta = [];
+      pintarVenta();
+      avisar('✅ Venta guardada: ' + pesos(total) + ' en caja.');
+    });
+    mostrar();
+    pintarVenta();
   }
 })();
