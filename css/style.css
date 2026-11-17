@@ -394,13 +394,14 @@ h3 { font-family: var(--titulo); }
   z-index: 2;
   width: 61cqw;
   height: 77cqw;
-  padding: 9.5cqw 2cqw 0 12cqw;
+  padding: 9.5cqw 4.5cqw 0 12cqw;
   background-color: var(--blanco);
-  background-image:
-    linear-gradient(var(--grilla-hoja) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grilla-hoja) 1px, transparent 1px);
-  background-size: 6cqw 6cqw;
-  background-position: 0 3cqw;
+  /* Hoja rayada, como un cuaderno común: solo renglones horizontales.
+     Cada renglón es UNA pieza del ancho de la hoja (no muchos cuadraditos repetidos): así, con la hoja inclinada, la línea sale entera y no en trazos */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'%3E%3Cpath d='M0 30H100' fill='none' stroke='%234682be' stroke-opacity='.5' stroke-width='3'/%3E%3C/svg%3E");
+  background-size: 100% 6cqw;
+  background-repeat: repeat-y;
+  background-position: 0 -.35cqw; /* cada renglón queda justo debajo de lo escrito */
   border: .55cqw solid var(--tinta);
   border-radius: 1.4cqw;
   box-shadow: 1.8cqw 1.8cqw 0 var(--tinta);
@@ -422,7 +423,7 @@ h3 { font-family: var(--titulo); }
   justify-content: space-between;
   height: 6cqw;
   line-height: 6cqw;
-  font: 600 5.2cqw/6cqw var(--mano);
+  font: 600 5cqw/6cqw var(--mano);
   color: var(--birome);
   white-space: nowrap;
 }
@@ -448,7 +449,7 @@ h3 { font-family: var(--titulo); }
   right: 1cqw;
   top: 18cqw;
   z-index: 3;
-  width: 38cqw;
+  width: 35cqw;
   height: 74cqw;
   padding: 6.6cqw 2.2cqw 2cqw;
   background: var(--blanco);
@@ -490,7 +491,7 @@ h3 { font-family: var(--titulo); }
 
 /* La escena se anima cuando entra en pantalla (main.js le pone .vivo) */
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes escribe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes escribe { from { clip-path: inset(-30% 100% -30% 0); } to { clip-path: inset(-30% -8% -30% 0); } } /* margen negativo: la letra a mano se sale un poco de su caja y no se tiene que cortar */
   @keyframes trazo { to { stroke-dashoffset: 0; } }
 
   .js .stage:not(.vivo) :is(.hoja, .cel, .renglones li, .hoja-titulo) { opacity: 0; }
